@@ -1,0 +1,26 @@
+WHY？
+	因为Android平台的特殊性，java层负责UI，可以完成特效编辑界面的开发，而视频播放，特效预览，OpenGL动画这些都是在C++层，并不能放在java层。
+	所以就需要从频繁从java层告诉C++层，我添加了某个特效，我删除了某个特效，移动了某个特效的位置等等繁琐的通知，如果每一个都创建一个JNI API，那代码会变得相当复杂。
+	所以就采取同步机制来同步当前用户操作后特效的组织结构，并且考虑到操作的通用性和扩展性，采取json来存储特效的组织关系，然后同步到底层。
+	
+HOW?
+	格式范例1：最外层是个map
+	{
+		effects:[E,E,E];   <==  effects 保存一个数组，每一个数组表示引入的一个特效。E参见范例2
+		//其他字段用于扩展。
+	}
+	
+	格式范例2
+	E = 
+	{
+		effect_id:  ?			//id
+		effect_key: ?			//key, 标志唯一的特效，就算同一个特效添加两次，也会产生不同的key。
+		effect_name: ?			//name 
+		effect_path: ?			//folder
+		effect_width: ?			//width
+		effect_height: ?		//height
+		effect_start: ?			//start time, seconds,
+		effect_duration: ?		//duration time, seconds, if = 0, means long as max.
+		
+		//用于扩展。
+	}

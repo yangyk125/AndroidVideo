@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>version</key>
+	<integer>1</integer>
+	<key>type</key>
+	<integer>1</integer>
+	<key>width</key>
+	<real>0.3</real>
+	<key>height</key>
+	<real>0.3</real>
+	<key>duration</key>
+	<real>2.6</real>
+	<key>plists</key>
+	<array>
+		<string>baozha.plist</string>
+	</array>
+	<key>texture</key>
+	<string>baozha.pvr.ccz</string>
+	<key>texname</key>
+	<string>baozha_%03d.png</string>
+	<key>fpsrate</key>
+	<integer>15</integer>
+	<key>sound</key>
+	<dict>
+		<key>file</key>
+		<string>baozha.mp3</string>
+		<key>time</key>
+		<real>2.6</real>
+		<key>start</key>
+		<integer>0</integer>
+		<key>repeat</key>
+		<integer>1</integer>
+	</dict>
+	<key>ending</key>
+	<string></string>
+</dict>
+</plist>

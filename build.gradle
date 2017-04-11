@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.android.video"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        /*
+        externalNativeBuild {
+            ndkBuild {
+                arguments "NDK_APPLICATION_MK:=jni/Application.mk"
+                abiFilters "armeabi-v7a"
+            }
+        }
+        */
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+        instrumentTest.setRoot('tests')
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    /*
+    externalNativeBuild {
+        ndkBuild {
+            path "jni/Android.mk"
+        }
+    }
+    */
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('jars/commons-httpclient-3.1.jar')
+    compile files('jars/android-support-v4.jar')
+}
+
+
+task buildNative(type: Exec) {
+    println '开始编译NATIVE...'
+    def ndkcmd = android.getNdkDirectory().absolutePath
+    if (System.properties['os.name'].toLowerCase().contains('windows')) {
+        ndkcmd += "/ndk-build.cmd"
+    } else {
+        ndkcmd += "/ndk-build"
+    }
+    commandLine ndkcmd, 'NDK_APP_APPLICATION_MK:=Application.mk', '-C', file('jni').absolutePath
+}
